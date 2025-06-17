@@ -43,7 +43,7 @@ public class LoginCtrl {
     @ApiOperation("获取账号信息")
     @RequestMapping(path = "/user", method = RequestMethod.GET)
     @ResponseBody
-    public ReturnMessage<UserInfo> getUserInfo(HttpServletRequest request) {
+    public ReturnMessage<com.github.hbq969.code.sm.login.model.UserInfo> getUserInfo(HttpServletRequest request) {
         return ReturnMessage.success(systemService.getUserInfo(request));
     }
 }

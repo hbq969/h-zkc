@@ -58,7 +58,7 @@ public interface SystemService {
 
     void logout(HttpServletRequest request, HttpServletResponse response);
 
-    UserInfo getUserInfo(HttpServletRequest request);
+    com.github.hbq969.code.sm.login.model.UserInfo getUserInfo(HttpServletRequest request);
 
     HttpSession getSession(String sid);
 }

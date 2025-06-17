@@ -236,12 +236,7 @@ const _ = (window as any).ResizeObserver;
 </script>
 
 <template>
-  <div class="container" v-if="isADMIN || menuMap['search']">
-    <el-page-header :icon="ArrowLeft" @back="router.push({path:'/main'})">
-      <template #content>
-        <span class="text-large font-600 mr-3"> 配置查询 </span>
-      </template>
-    </el-page-header>
+  <div class="container">
     <el-form :model="searchForm" :inline="true" size="small" style="margin-top: 20px">
       <el-form-item label="目录：">
         <el-input v-model="searchForm.path" type="text"/>
@@ -254,10 +249,10 @@ const _ = (window as any).ResizeObserver;
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="searchProperty">查询</el-button>
-        <el-button type="warning" @click="showBatchUpdateDialog">批量修改</el-button>
+        <el-button type="warning" @click="showBatchUpdateDialog" v-if="isADMIN">批量修改</el-button>
         <el-popconfirm title="确认要删除这些配置吗?" confirm-button-type="danger" @confirm="batchDeleteConfig">
             <template #reference>
-              <el-button type="danger" >批量删除</el-button>
+              <el-button type="danger" v-if="isADMIN">批量删除</el-button>
             </template>
         </el-popconfirm>
       </el-form-item>
@@ -266,14 +261,14 @@ const _ = (window as any).ResizeObserver;
     <el-table ref="tableRef" :data="searchData" style="width: 100%" :border="true" table-layout="fixed" :stripe="true"
               size="small"
               :highlight-current-row="true" :header-cell-style="headerCellStyle">
-      <el-table-column type="selection" header-align="center" align="center"/>
-      <el-table-column fixed="left" label="操作" width="120" header-align="center" align="center">
+      <el-table-column type="selection" header-align="center" align="center" v-if="isADMIN"/>
+      <el-table-column fixed="left" label="操作" width="120" header-align="center" align="center" v-if="isADMIN">
         <template #default="scope">
           <el-button :icon="Edit" circle size="small" title="编辑" @click="updateProperty(scope)"/>
           <el-popconfirm title="你确定要删除本条配置吗?" @confirm="deleteProperty(scope)" :icon="WarningFilled"
                          confirm-button-type="danger" cancel-button-type="info" icon-color="red">
             <template #reference>
-              <el-button :icon="Delete" circle size="small" title="删除" v-if="isADMIN || menuMap['delete']"/>
+              <el-button :icon="Delete" circle size="small" title="删除"/>
             </template>
           </el-popconfirm>
         </template>

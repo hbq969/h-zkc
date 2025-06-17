@@ -7,10 +7,10 @@
             <el-icon size="large">
               <HomeFilled/>
             </el-icon>
-            配置中心
+            控制台
           </el-menu-item>
           <div class="flex-grow"/>
-          <el-sub-menu index="create" v-if="isADMIN || menuMap['create']">
+          <el-sub-menu index="create" v-if="isADMIN">
             <template #title>
               <el-icon size="large">
                 <Plus/>
@@ -30,7 +30,7 @@
               属性
             </el-menu-item>
           </el-sub-menu>
-          <el-menu-item index="delete" v-if="isADMIN || menuMap['delete']">
+          <el-menu-item index="delete" v-if="isADMIN">
             <el-icon size="large">
               <Delete/>
             </el-icon>
@@ -41,13 +41,13 @@
               </template>
             </el-popconfirm>
           </el-menu-item>
-          <el-menu-item index="export" @click="exportSelected" v-if="isADMIN || menuMap['export']">
+          <el-menu-item index="export" @click="exportSelected" v-if="isADMIN">
             <el-icon size="large">
               <Expand/>
             </el-icon>
             导出
           </el-menu-item>
-          <el-sub-menu index="import" v-if="isADMIN || menuMap['import']">
+          <el-sub-menu index="import" v-if="isADMIN">
             <template #title>
               <el-icon size="large">
                 <Upload/>
@@ -73,61 +73,7 @@
               .yaml
             </el-menu-item>
           </el-sub-menu>
-          <el-menu-item index="search" @click="router.push({path:'/query'})" v-if="isADMIN || menuMap['search']">
-            <el-icon size="large">
-              <Search/>
-            </el-icon>
-            查询
-          </el-menu-item>
-          <el-menu-item index="history" @click="router.push({path:'/history'})" v-if="isADMIN || menuMap['history']">
-            <el-icon size="large">
-              <Clock/>
-            </el-icon>
-            历史
-          </el-menu-item>
-          <el-menu-item index="backup" @click="router.push({path: '/back'})" v-if="isADMIN || menuMap['backup']">
-            <el-icon size="large">
-              <UploadFilled/>
-            </el-icon>
-            备份/恢复
-          </el-menu-item>
-          <el-menu-item index="refresh" @click="router.push({path:'/refresh'})" v-if="isADMIN || menuMap['refresh']">
-            <el-icon size="large">
-              <Refresh/>
-            </el-icon>
-            配置刷新
-          </el-menu-item>
-          <el-sub-menu index="system" v-if="isADMIN">
-            <template #title>
-              <el-icon size="large">
-                <Setting/>
-              </el-icon>
-              系统管理
-            </template>
-            <el-menu-item index="roleManagement" @click="router.push({path: '/role'})">
-              <el-icon size="large">
-                <UserFilled/>
-              </el-icon>
-              角色管理
-            </el-menu-item>
-            <el-menu-item index="userManagement" @click="router.push({path: '/user'})">
-              <el-icon size="large">
-                <User/>
-              </el-icon>
-              用户管理
-            </el-menu-item>
-            <el-menu-item index="menuManagement" @click="router.push({path: '/menu'})">
-              <el-icon size="large">
-                <Menu/>
-              </el-icon>
-              菜单管理
-            </el-menu-item>
-          </el-sub-menu>
         </el-menu>
-        <span style="right: 4%;position: fixed;font-size: 12px;color: blue;cursor: pointer">{{ loginName }}</span>
-        <el-icon @click="logout" style="cursor: pointer">
-          <SwitchButton/>
-        </el-icon>
       </el-header>
       <el-container class="container">
         <el-aside :class="['aside', { 'aside-collapsed': !isAsideVisible }]">
@@ -390,6 +336,11 @@ onMounted(() => {
     method: 'get'
   }).then((res: any) => {
     if (res.data.state == 'OK') {
+      // "userName": "admin",
+      // "roleName": "ADMIN",
+      // "menus": [],
+      // "permissionSet": [],
+      // "admin": true
       loginName.value = res.data.body.userName
       isADMIN.value = (res.data.body.roleName == 'ADMIN')
       if (res.data.body.menus && res.data.body.menus.length > 0) {

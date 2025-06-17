@@ -1,6 +1,7 @@
 package com.github.hbq969.code.zkc.service.impl;
 
 import com.github.hbq969.code.common.spring.context.SpringContext;
+import com.github.hbq969.code.sm.login.session.UserContext;
 import com.github.hbq969.code.zkc.config.ZkcProperties;
 import com.github.hbq969.code.zkc.dao.SystemDao;
 import com.github.hbq969.code.zkc.dao.entity.MenuEntity;
@@ -240,12 +241,8 @@ public class SystemServiceImpl implements SystemService, InitializingBean {
     }
 
     @Override
-    public UserInfo getUserInfo(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        if (session != null) {
-            return (UserInfo) session.getAttribute("user");
-        } else {
-            throw new RuntimeException("会话失效，请重新登录");
-        }
+    public com.github.hbq969.code.sm.login.model.UserInfo getUserInfo(HttpServletRequest request) {
+        com.github.hbq969.code.sm.login.model.UserInfo ui = UserContext.get();
+        return ui;
     }
 }

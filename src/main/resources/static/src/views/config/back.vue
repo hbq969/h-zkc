@@ -157,11 +157,6 @@ const _ = (window as any).ResizeObserver;
 
 <template>
   <div class="container" v-if="isADMIN || menuMap['backup']">
-    <el-page-header :icon="ArrowLeft" @back="router.push({path:'/main'})">
-      <template #content>
-        <span class="text-large font-600 mr-3"> 备份 & 恢复 </span>
-      </template>
-    </el-page-header>
     <el-form :model="haForm" :inline="true" ref="haFormRef" :rules="haRules" size="small" style="margin-top: 20px">
       <el-form-item label="时间：" prop="time">
         <el-date-picker v-model="haForm.time" type="daterange" unlink-panels range-separator="至"

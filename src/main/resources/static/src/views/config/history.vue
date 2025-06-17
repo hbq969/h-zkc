@@ -104,12 +104,7 @@ const _ = (window as any).ResizeObserver;
 </script>
 
 <template>
-  <div class="container" v-if="isADMIN || menuMap['history']">
-    <el-page-header :icon="ArrowLeft" @back="router.push({path:'/main'})">
-      <template #content>
-        <span class="text-large font-600 mr-3"> 历史操作记录 </span>
-      </template>
-    </el-page-header>
+  <div class="container">
     <el-form :model="historyForm" :inline="true" ref="historyFormRef" :rules="historyRules" size="small" style="margin-top: 20px">
       <el-form-item label="时间：" prop="time">
         <el-date-picker v-model="historyForm.time" type="daterange" unlink-panels range-separator="至"
